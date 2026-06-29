@@ -182,7 +182,7 @@ export default function ProjectDetailPage({ project, projects, onNavigateToProje
               <div
                 key={related.id}
                 onClick={() => onNavigateToProject(related)}
-                className="group cursor-pointer flex flex-col justify-between overflow-hidden bg-brand-card border border-brand-border rounded-2xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 h-[360px]"
+                className="group cursor-pointer flex flex-col justify-between overflow-hidden bg-brand-card border border-brand-border rounded-2xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 min-h-[360px] pb-5"
               >
                 {/* Related Image */}
                 <div className="h-[185px] w-full overflow-hidden relative">

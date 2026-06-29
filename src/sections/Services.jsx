@@ -1,106 +1,115 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Sparkles, Layout, Compass, PenTool, Lightbulb, Flower, Paintbrush, ShieldCheck } from 'lucide-react';
 
 export default function Services() {
-  const services = [
+  const servicesList = [
     {
       num: "01",
-      title: "Residential Interiors",
-      icon: <Layout size={18} className="text-brand-accent" />,
-      desc: "Creating elegant, functional, and highly bespoke interior architecture tailored to the lifestyles of discerning homeowners."
+      title: "Interior Architecture",
+      desc: "Creating sophisticated, custom interior layouts for premium apartments, estates, and penthouses. We design around spatial proportions, scale, and natural light channels to establish a harmonious flow before any decorative styling begins.",
+      image: "/assets/project_urban_serenity.png",
+      details: ["Spatial volume planning", "Sightline optimization", "Double-height detailing", "Lighting integration"]
     },
     {
       num: "02",
-      title: "Villas & Farmhouses",
-      icon: <Sparkles size={18} className="text-brand-accent" />,
-      desc: "Comprehensive architecture and design solutions for massive family estates, integrating outdoor gardens with rich indoor living spaces."
+      title: "Turnkey Studio Management",
+      desc: "Complete design execution from blueprints to final keys. We coordinate our curated network of contractors, engineers, and specialty craftsmen to oversee site management, procurement, and installations with millimeter-perfect precision.",
+      image: "/assets/process_craftsmanship.png",
+      details: ["Contractor supervision", "Procurement & logistics", "Project management", "Quality verification"]
     },
     {
       num: "03",
-      title: "Turnkey Design & Execution",
-      icon: <ShieldCheck size={18} className="text-brand-accent" />,
-      desc: "Complete end-to-end studio management of your project, from blueprints to material procurement, contracting, and final key handover."
+      title: "Bespoke Millwork & Furniture",
+      desc: "Designing signature custom-crafted furniture, wardrobes, and kitchen counters in natural walnut, dark oak, and Italian marbles. Every piece is drawn in-house and built in our dedicated Gurugram workshop to fit your home's exact layout.",
+      image: "/assets/gallery_kitchen.png",
+      details: ["Custom cabinetry", "Sculptural marble islands", "Bespoke dining setups", "Material sourcing"]
     },
     {
       num: "04",
-      title: "Space Planning",
-      icon: <Compass size={18} className="text-brand-accent" />,
-      desc: "Masterful architectural floor plan revisions to optimize light channels, spatial ergonomics, acoustic comfort, and natural ventilation."
-    },
-    {
-      num: "05",
-      title: "Custom Furniture Design",
-      icon: <PenTool size={18} className="text-brand-accent" />,
-      desc: "Designing signature luxury furniture pieces—dining tables, consoles, cabinets—crafted specifically for your home's proportions."
-    },
-    {
-      num: "06",
-      title: "Lighting Design",
-      icon: <Lightbulb size={18} className="text-brand-accent" />,
-      desc: "Curation of architectural and decorative lighting systems to sculpt atmosphere, highlight fine art, and set ambient room tones."
-    },
-    {
-      num: "07",
-      title: "Styling & Décor",
-      icon: <Flower size={18} className="text-brand-accent" />,
-      desc: "Sourcing premium accessories, soft textiles, fine art, and biophilic plants to introduce the final layers of luxury and warmth."
-    },
-    {
-      num: "08",
-      title: "Luxury Apartments",
-      icon: <Paintbrush size={18} className="text-brand-accent" />,
-      desc: "Re-imagining urban high-rise living areas, maximizing layout efficiency while embedding high-end detailing and bespoke fittings."
+      title: "Art Curation & Final Styling",
+      desc: "Sourcing and styling the final layer of your home. We curate international art pieces, soft linens, statement lighting, and biophilic elements that reflect your personality and give the space a warm, deeply lived-in luxury.",
+      image: "/assets/gallery_bedroom.png",
+      details: ["Fine art advisory", "Soft textile styling", "Acoustic layouts", "Bespoke lighting layouts"]
     }
   ];
 
   return (
-    <section id="services" className="section-spacer bg-brand-secBg text-brand-textPrimary transition-colors duration-500">
+    <section id="services" className="section-spacer bg-brand-bg text-brand-textPrimary transition-colors duration-500 overflow-hidden border-t border-brand-border">
       <div className="layout-container">
         
         {/* Section Header */}
-        <div className="max-w-xl mb-12 text-left">
-          <span className="text-[10px] uppercase tracking-[0.4em] text-brand-accent font-semibold">Bespoke Offerings</span>
-          <h2 className="font-sans font-semibold text-[26px] lg:text-[42px] leading-[1.3] text-brand-textPrimary tracking-normal mt-2">
-            Bespoke Services
+        <div className="max-w-2xl mb-24 text-left">
+          <span className="text-[10px] uppercase tracking-[0.4em] text-brand-accent font-semibold block mb-4">
+            Bespoke Offerings
+          </span>
+          <h2 className="font-sans font-normal text-[28px] lg:text-[48px] leading-[1.2] text-brand-textPrimary tracking-tight">
+            Our Services
           </h2>
-          <p className="mt-4 text-[16px] lg:text-[18px] font-sans font-light text-brand-textSecondary leading-[1.7] max-w-md">
-            From complete architectural renovations to final styling details, we manage the entire project lifecycle with uncompromising attention to quality.
+          <p className="mt-6 text-[15px] lg:text-[17px] font-sans font-light text-brand-textSecondary leading-[1.8] max-w-lg">
+            From initial architectural drafts to the final styling details, we manage the entire project lifecycle with an uncompromising commitment to quality and craft.
           </p>
         </div>
 
-        {/* Services Cards Grid - Redesigned to rounded-2xl white cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {services.map((service, idx) => (
-            <motion.div
-              key={idx}
-              className="relative group p-6 border border-brand-border bg-brand-card hover:bg-brand-bg transition-all duration-300 rounded-2xl flex flex-col justify-between h-[220px] shadow-sm hover:shadow-md hover:-translate-y-0.5"
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.05, duration: 0.5 }}
-            >
-              {/* Icon & Number */}
-              <div className="flex items-center justify-between">
-                <div className="p-2 border border-brand-border rounded-lg bg-brand-bg group-hover:bg-brand-card transition-colors">
-                  {service.icon}
+        {/* Alternating Split Layout List */}
+        <div className="space-y-[120px] lg:space-y-[180px]">
+          {servicesList.map((service, idx) => {
+            const isEven = idx % 2 === 0;
+            return (
+              <div 
+                key={idx}
+                className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center"
+              >
+                {/* Image Column */}
+                <div className={`col-span-1 lg:col-span-6 ${isEven ? 'lg:order-1' : 'lg:order-2'}`}>
+                  <motion.div 
+                    className="relative aspect-[3/2] overflow-hidden rounded-[12px] group border border-brand-border bg-brand-secBg"
+                    initial={{ opacity: 0, x: isEven ? -30 : 30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.7, ease: "easeOut" }}
+                  >
+                    <img 
+                      src={service.image} 
+                      alt={service.title} 
+                      className="w-full h-full object-cover transition-transform duration-[800ms] ease-out group-hover:scale-[1.03]"
+                    />
+                    {/* Dark overlay only on hover */}
+                    <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                  </motion.div>
                 </div>
-                <span className="font-sans font-bold text-lg text-brand-border group-hover:text-brand-accent transition-colors select-none">
-                  {service.num}
-                </span>
-              </div>
 
-              {/* Title & Description */}
-              <div className="mt-4 text-left">
-                <h3 className="font-sans font-semibold text-[15px] lg:text-[16px] text-brand-textPrimary tracking-normal">
-                  {service.title}
-                </h3>
-                <p className="mt-1 text-[11px] font-sans text-brand-textSecondary leading-relaxed font-light">
-                  {service.desc}
-                </p>
+                {/* Content Column */}
+                <div className={`col-span-1 lg:col-span-6 text-left space-y-6 ${isEven ? 'lg:order-2 lg:pl-6' : 'lg:order-1 lg:pr-6'}`}>
+                  <motion.div
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.6, delay: 0.1 }}
+                  >
+                    <span className="text-[11px] uppercase tracking-[0.3em] font-semibold text-brand-accent block mb-2">
+                      Phase {service.num}
+                    </span>
+                    <h3 className="font-sans font-normal text-[24px] lg:text-[36px] text-brand-textPrimary leading-tight tracking-tight">
+                      {service.title}
+                    </h3>
+                    <p className="mt-4 text-[15px] lg:text-[16px] text-brand-textSecondary leading-[1.8] font-sans font-light">
+                      {service.desc}
+                    </p>
+                    
+                    {/* Supporting Details */}
+                    <ul className="mt-8 grid grid-cols-2 gap-x-4 gap-y-2 border-t border-brand-border/40 pt-6">
+                      {service.details.map((detail, dIdx) => (
+                        <li key={dIdx} className="flex items-center gap-2 text-xs font-sans text-brand-textSecondary font-light">
+                          <span className="w-1.5 h-1.5 rounded-full bg-brand-accent/60 shrink-0" />
+                          <span>{detail}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </motion.div>
+                </div>
               </div>
-            </motion.div>
-          ))}
+            );
+          })}
         </div>
 
       </div>

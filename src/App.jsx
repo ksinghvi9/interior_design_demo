@@ -11,7 +11,6 @@ import ProjectDetailPage from './components/ProjectDetailPage';
 // Sections
 import Hero from './sections/Hero';
 import About from './sections/About';
-import Stats from './sections/Stats';
 import Portfolio from './sections/Portfolio';
 import Services from './sections/Services';
 import Process from './sections/Process';
@@ -93,9 +92,6 @@ export default function App() {
 
                 {/* About Founder & Philosophy */}
                 <About />
-
-                {/* Stats Metric Panel */}
-                <Stats />
 
                 {/* Before / After Interactive Slider Section */}
                 <section className="section-spacer bg-brand-bg border-t border-brand-border">

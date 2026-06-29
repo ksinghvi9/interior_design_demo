@@ -4,7 +4,24 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 export default function BeforeAfterSlider({ beforeImage, afterImage }) {
   const [sliderPosition, setSliderPosition] = useState(50); // percentage (0 - 100)
   const [isDragging, setIsDragging] = useState(false);
+  const [containerWidth, setContainerWidth] = useState(0);
   const containerRef = useRef(null);
+
+  // Monitor container width dynamically to preserve image aspect ratio on resize/rotation
+  useEffect(() => {
+    if (containerRef.current) {
+      setContainerWidth(containerRef.current.offsetWidth);
+    }
+
+    const handleResize = () => {
+      if (containerRef.current) {
+        setContainerWidth(containerRef.current.offsetWidth);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleMove = (clientX) => {
     if (!containerRef.current) return;
@@ -12,11 +29,6 @@ export default function BeforeAfterSlider({ beforeImage, afterImage }) {
     const x = clientX - rect.left;
     const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
     setSliderPosition(percentage);
-  };
-
-  const handleTouchMove = (e) => {
-    if (!isDragging) return;
-    handleMove(e.touches[0].clientX);
   };
 
   const handleMouseMove = (e) => {
@@ -29,14 +41,26 @@ export default function BeforeAfterSlider({ beforeImage, afterImage }) {
       setIsDragging(false);
     };
 
+    const handleTouchMove = (e) => {
+      if (!isDragging) return;
+      // Prevent background scrolling while dragging on touch screens
+      if (e.cancelable) {
+        e.preventDefault();
+      }
+      handleMove(e.touches[0].clientX);
+    };
+
     if (isDragging) {
       window.addEventListener('mouseup', handleMouseUp);
       window.addEventListener('touchend', handleMouseUp);
+      // Bind with passive: false to allow e.preventDefault()
+      window.addEventListener('touchmove', handleTouchMove, { passive: false });
     }
 
     return () => {
       window.removeEventListener('mouseup', handleMouseUp);
       window.removeEventListener('touchend', handleMouseUp);
+      window.removeEventListener('touchmove', handleTouchMove);
     };
   }, [isDragging]);
 
@@ -47,7 +71,6 @@ export default function BeforeAfterSlider({ beforeImage, afterImage }) {
       onMouseDown={() => setIsDragging(true)}
       onTouchStart={() => setIsDragging(true)}
       onMouseMove={handleMouseMove}
-      onTouchMove={handleTouchMove}
     >
       {/* Before Image (Background) */}
       <img 
@@ -67,8 +90,8 @@ export default function BeforeAfterSlider({ beforeImage, afterImage }) {
         <img 
           src={afterImage} 
           alt="After design" 
-          className="absolute top-0 left-0 w-full h-full object-cover max-w-none"
-          style={{ width: containerRef.current ? containerRef.current.offsetWidth : '100%', height: '100%' }}
+          className="absolute top-0 left-0 h-full object-cover max-w-none"
+          style={{ width: containerWidth ? `${containerWidth}px` : '100%', height: '100%' }}
         />
         <div className="absolute top-4 right-4 bg-brand-gold/90 text-brand-charcoal text-[9px] uppercase tracking-widest px-3 py-1.5 backdrop-blur-sm z-10">
           After Design

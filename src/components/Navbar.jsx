@@ -43,6 +43,18 @@ export default function Navbar({ currentView, onBackToHome, onNavigate }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [currentView]);
 
+  // Lock background scroll on mobile when menu drawer is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
   const handleNavClick = (id) => {
     setIsOpen(false);
     onNavigate(id);
@@ -51,10 +63,10 @@ export default function Navbar({ currentView, onBackToHome, onNavigate }) {
   return (
     <>
       <motion.nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-md ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled 
-            ? 'bg-brand-bg/95 border-b border-brand-border py-3.5 shadow-sm' 
-            : 'bg-brand-bg/75 border-b border-brand-border/60 py-5'
+            ? 'bg-brand-bg/95 border-b border-brand-border py-3.5 shadow-sm backdrop-blur-md' 
+            : 'bg-transparent border-b border-transparent py-6'
         }`}
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -67,16 +79,16 @@ export default function Navbar({ currentView, onBackToHome, onNavigate }) {
             onClick={() => handleNavClick('home')}
             className="flex items-center gap-2.5 focus:outline-none text-left cursor-pointer"
           >
-            <svg viewBox="0 0 100 100" className="w-8 h-8 stroke-brand-textPrimary fill-none">
-              <circle cx="50" cy="50" r="45" stroke="#B08A5A" strokeWidth="0.8" strokeDasharray="3 3" />
+            <svg viewBox="0 0 100 100" className={`w-8 h-8 stroke-current fill-none transition-colors duration-300 ${scrolled ? 'text-brand-textPrimary' : 'text-white'}`}>
+              <circle cx="50" cy="50" r="45" stroke={scrolled ? "#B08A5A" : "rgba(255,255,255,0.3)"} strokeWidth="0.8" strokeDasharray="3 3" />
               <path d="M34 72 L49 28 L64 72 M40 58 L58 58" strokeWidth="1.8" />
-              <path d="M38 72 L51 32 L64 72" stroke="#B08A5A" strokeWidth="1" opacity="0.8" />
+              <path d="M38 72 L51 32 L64 72" stroke={scrolled ? "#B08A5A" : "rgba(255,255,255,0.6)"} strokeWidth="1" opacity="0.8" />
             </svg>
             <div className="flex flex-col">
-              <span className="font-sans font-semibold text-[15px] tracking-[0.2em] text-brand-textPrimary uppercase">
+              <span className={`font-sans font-semibold text-[15px] tracking-[0.2em] uppercase transition-colors duration-300 ${scrolled ? 'text-brand-textPrimary' : 'text-white'}`}>
                 Aurum Atelier
               </span>
-              <span className="text-[7px] uppercase tracking-[0.35em] text-brand-accent font-light mt-0.5">
+              <span className={`text-[7px] uppercase tracking-[0.35em] font-light mt-0.5 transition-colors duration-300 ${scrolled ? 'text-brand-accent' : 'text-white/60'}`}>
                 Luxury Interior Studio
               </span>
             </div>
@@ -93,7 +105,9 @@ export default function Navbar({ currentView, onBackToHome, onNavigate }) {
                   >
                     <span className={currentView === 'home' && activeSection === item.id 
                       ? 'text-brand-accent font-semibold' 
-                      : 'text-brand-textSecondary hover:text-brand-accent transition-colors'
+                      : (scrolled 
+                          ? 'text-brand-textSecondary hover:text-brand-accent transition-colors' 
+                          : 'text-white/80 hover:text-white transition-colors')
                     }>
                       {item.name}
                     </span>
@@ -114,7 +128,9 @@ export default function Navbar({ currentView, onBackToHome, onNavigate }) {
           <div className="flex items-center gap-3 lg:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-brand-textPrimary p-1 focus:outline-none cursor-pointer"
+              className={`p-1 focus:outline-none cursor-pointer transition-colors ${
+                isOpen ? 'text-brand-textPrimary' : (scrolled ? 'text-brand-textPrimary' : 'text-white')
+              }`}
               aria-label="Menu"
             >
               {isOpen ? <X size={20} /> : <Menu size={20} />}

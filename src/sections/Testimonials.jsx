@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function Testimonials() {
   const [index, setIndex] = useState(0);
@@ -42,46 +42,36 @@ export default function Testimonials() {
   };
 
   return (
-    <section className="section-spacer bg-brand-secBg text-brand-textPrimary transition-colors duration-500 overflow-hidden relative border-t border-brand-border/40">
-      <div className="absolute top-1/2 left-10 w-96 h-96 bg-brand-accent/5 rounded-full blur-3xl -translate-y-1/2 pointer-events-none" />
-
-      <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
+    <section className="section-spacer bg-brand-bg text-brand-textPrimary transition-colors duration-500 overflow-hidden relative border-t border-brand-border">
+      <div className="max-w-4xl mx-auto px-6 text-center">
         
         {/* Section Header */}
-        <span className="text-[10px] uppercase tracking-[0.4em] text-brand-accent font-semibold">Client Stories</span>
-        <h2 className="font-sans font-semibold text-[26px] lg:text-[42px] leading-[1.3] text-brand-textPrimary tracking-normal mt-2 mb-10">
-          Client Feedback
-        </h2>
-
+        <span className="text-[10px] uppercase tracking-[0.4em] text-brand-accent font-semibold block mb-4">
+          Client Stories
+        </span>
+        
         {/* Carousel Container */}
-        <div className="min-h-[200px] flex items-center justify-center">
+        <div className="min-h-[250px] flex items-center justify-center">
           <AnimatePresence mode="wait">
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.5 }}
-              className="flex flex-col items-center"
+              transition={{ duration: 0.5, ease: "easeOut" }}
+              className="flex flex-col items-center max-w-3xl"
             >
-              {/* Star Ratings */}
-              <div className="flex gap-1 mb-5">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} size={11} fill="#B08A5A" color="#B08A5A" />
-                ))}
-              </div>
-
               {/* Quote Text */}
-              <p className="font-serif text-[18px] lg:text-[22px] font-light italic leading-relaxed text-brand-textPrimary max-w-2xl">
+              <p className="font-sans text-[20px] lg:text-[28px] font-light leading-relaxed text-brand-textPrimary max-w-3xl">
                 "{reviews[index].text}"
               </p>
 
               {/* Author Details */}
-              <div className="mt-6">
-                <p className="font-sans text-xs uppercase tracking-widest text-brand-accent font-semibold">
+              <div className="mt-8">
+                <p className="font-sans text-[11px] uppercase tracking-[0.25em] text-brand-accent font-semibold">
                   {reviews[index].author}
                 </p>
-                <p className="font-sans text-[10px] text-brand-textSecondary tracking-wider mt-1 uppercase">
+                <p className="font-sans text-[9px] text-brand-textSecondary tracking-widest mt-1 uppercase font-light">
                   {reviews[index].role} • {reviews[index].location}
                 </p>
               </div>
@@ -90,10 +80,10 @@ export default function Testimonials() {
         </div>
 
         {/* Navigation Buttons */}
-        <div className="flex justify-center items-center gap-6 mt-10">
+        <div className="flex justify-center items-center gap-6 mt-12">
           <button
             onClick={handlePrev}
-            className="p-2.5 border border-brand-border hover:border-brand-accent hover:text-brand-accent transition-colors duration-300 rounded-full focus:outline-none cursor-pointer text-brand-textSecondary bg-brand-card shadow-sm"
+            className="p-2.5 border border-brand-border/60 hover:border-brand-accent hover:text-brand-accent transition-colors duration-300 rounded-full focus:outline-none cursor-pointer text-brand-textSecondary bg-transparent"
             aria-label="Previous Testimonial"
           >
             <ChevronLeft size={14} />
@@ -105,8 +95,8 @@ export default function Testimonials() {
               <button
                 key={i}
                 onClick={() => setIndex(i)}
-                className={`h-1 transition-all duration-500 rounded-full cursor-pointer ${
-                  index === i ? 'w-6 bg-brand-accent' : 'w-2 bg-brand-border'
+                className={`h-[3px] transition-all duration-500 rounded-full cursor-pointer ${
+                  index === i ? 'w-6 bg-brand-accent' : 'w-2 bg-brand-border/60'
                 }`}
                 aria-label={`Go to slide ${i + 1}`}
               />
@@ -115,7 +105,7 @@ export default function Testimonials() {
 
           <button
             onClick={handleNext}
-            className="p-2.5 border border-brand-border hover:border-brand-accent hover:text-brand-accent transition-colors duration-300 rounded-full focus:outline-none cursor-pointer text-brand-textSecondary bg-brand-card shadow-sm"
+            className="p-2.5 border border-brand-border/60 hover:border-brand-accent hover:text-brand-accent transition-colors duration-300 rounded-full focus:outline-none cursor-pointer text-brand-textSecondary bg-transparent"
             aria-label="Next Testimonial"
           >
             <ChevronRight size={14} />

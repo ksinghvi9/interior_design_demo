@@ -43,7 +43,7 @@ export default function Lightbox({ image, isOpen, onClose }) {
               <span className="font-sans text-[9px] uppercase tracking-[0.3em] text-brand-gold">
                 {image.category}
               </span>
-              <h3 className="font-serif text-lg text-white mt-1">
+              <h3 className="font-sans font-semibold text-lg text-white mt-1">
                 {image.title || 'Exquisite Design Details'}
               </h3>
             </div>

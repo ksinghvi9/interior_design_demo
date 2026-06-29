@@ -32,29 +32,31 @@ export default function Hero({ onNavigate }) {
   return (
     <section 
       id="home" 
-      className="relative h-[75vh] min-h-[500px] w-full overflow-hidden bg-brand-charcoal flex items-center justify-center border-b border-brand-border"
+      className="relative h-screen w-full overflow-hidden bg-brand-charcoal flex items-center justify-center"
     >
       {/* Background Image with Parallax & Dark Overlay */}
       <motion.div 
         className="absolute inset-0 w-full h-[110%] -top-[5%] pointer-events-none"
         style={{ y: bgY }}
       >
-        <img 
+        <motion.img 
           src="/assets/hero_living_room.png" 
           alt="Warm luxury living room interior design" 
           className="w-full h-full object-cover"
+          initial={{ scale: 1.1 }}
+          animate={{ scale: 1.03 }}
+          transition={{ duration: 6, ease: [0.25, 0.46, 0.45, 0.94] }}
         />
-        {/* Preferred Dark Overlay for Legibility */}
+        {/* Dark Overlay */}
         <div 
-          className="absolute inset-0" 
-          style={{ background: 'linear-gradient(to right, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.35))' }}
+          className="absolute inset-0 bg-black/55" 
         />
       </motion.div>
 
       {/* Hero Content */}
-      <div className="relative layout-container z-10">
+      <div className="relative layout-container z-10 flex flex-col items-center justify-center text-center">
         <motion.div
-          className="max-w-xl text-left"
+          className="max-w-2xl mx-auto flex flex-col items-center"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -62,47 +64,39 @@ export default function Hero({ onNavigate }) {
         >
           {/* Subtle gold tag */}
           <motion.span 
-            className="inline-block text-[10px] uppercase tracking-[0.4em] text-brand-accent font-semibold mb-3 animate-pulse-subtle"
+            className="inline-block text-[10px] uppercase tracking-[0.4em] text-brand-accent font-semibold mb-5"
             variants={itemVariants}
           >
             Bespoke Architecture & Interiors
           </motion.span>
 
-          {/* Headline (White headings) */}
+          {/* Headline */}
           <motion.h1 
-            className="font-sans font-semibold text-[32px] lg:text-[56px] text-white tracking-normal leading-[1.2] mb-6"
+            className="font-sans font-semibold text-[38px] sm:text-[48px] lg:text-[72px] text-white tracking-tight leading-[1.1] mb-6"
             variants={itemVariants}
           >
-            Spaces Crafted <br />
-            <span className="text-brand-accent">Around Life.</span>
+            Spaces Crafted Around Life.
           </motion.h1>
 
-          {/* Subheadline (rgba(255,255,255,0.9)) */}
+          {/* Subheadline (very little text) */}
           <motion.p 
-            className="font-sans text-[16px] lg:text-[18px] leading-[1.7] font-light tracking-wide mb-8 max-w-md"
-            style={{ color: 'rgba(255, 255, 255, 0.9)' }}
+            className="font-sans text-[15px] sm:text-[17px] leading-relaxed font-light tracking-wide mb-10 max-w-lg text-white/90"
             variants={itemVariants}
           >
-            We design homes that balance beauty, comfort, and timeless sophistication. Every detail is curated to express your personal narrative.
+            We design home sanctuaries that balance comfort, spatial elegance, and timeless craftsmanship.
           </motion.p>
 
-          {/* Call to Action Buttons */}
+          {/* Call to Action Button (One elegant CTA) */}
           <motion.div 
-            className="flex flex-col sm:flex-row gap-4"
+            className="flex justify-center"
             variants={itemVariants}
           >
             <button 
               onClick={() => onNavigate('portfolio')}
-              className="group flex items-center justify-center gap-3 px-8 py-3.5 bg-brand-accent text-white hover:bg-white hover:text-brand-accent transition-all duration-300 text-[11px] uppercase tracking-widest font-semibold cursor-pointer border border-transparent"
+              className="group flex items-center justify-center gap-3 px-10 py-4 bg-brand-accent hover:bg-white text-white hover:text-[#1D1D1D] transition-all duration-500 text-[10px] uppercase tracking-[0.25em] font-semibold cursor-pointer border border-transparent rounded-[2px]"
             >
               View Projects
-              <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
-            </button>
-            <button 
-              onClick={() => onNavigate('contact')}
-              className="flex items-center justify-center gap-3 px-8 py-3.5 bg-transparent text-white hover:text-brand-accent border border-white hover:border-brand-accent transition-all duration-300 text-[11px] uppercase tracking-widest font-semibold cursor-pointer"
-            >
-              Book Consultation
+              <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform duration-300" />
             </button>
           </motion.div>
         </motion.div>
@@ -110,13 +104,13 @@ export default function Hero({ onNavigate }) {
 
       {/* Floating Scroll Down Indicator */}
       <motion.div 
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer z-10"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer z-10"
         onClick={() => onNavigate('about')}
         animate={{ y: [0, 6, 0] }}
         transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut" }}
       >
         <span className="text-[8px] uppercase tracking-[0.3em] text-white/70 font-semibold">Scroll Down</span>
-        <div className="w-[1px] h-6 bg-brand-accent" />
+        <div className="w-[1px] h-8 bg-brand-accent" />
       </motion.div>
     </section>
   );

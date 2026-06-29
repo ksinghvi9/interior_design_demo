@@ -81,15 +81,13 @@ export default function Gallery() {
     setSelectedCategory(cat);
     setIsLoading(true);
 
-    // Fade out current grid, swap content behind shimmer, then fade back in
+    // Fade out current grid, swap content, then fade back in
     setTimeout(() => {
       setDisplayedCategory(cat);
-      
-      // Let the premium shimmer show briefly to signify active loading state
       setTimeout(() => {
         setIsLoading(false);
-      }, 250);
-    }, 200);
+      }, 150);
+    }, 150);
   };
 
   const openLightbox = (image) => {
@@ -101,27 +99,29 @@ export default function Gallery() {
     <section id="gallery" className="section-spacer bg-brand-bg transition-colors duration-500 border-t border-brand-border">
       <div className="layout-container">
         
-        {/* Section Header & Premium Pill Filter Navigation */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+        {/* Section Header & Minimal Category Filter tabs */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-6">
           <div className="text-left">
-            <span className="text-[10px] uppercase tracking-[0.4em] text-brand-accent font-semibold">Inspiration Wall</span>
-            <h2 className="font-sans font-semibold text-[26px] lg:text-[42px] leading-[1.3] text-brand-textPrimary tracking-normal mt-2">
+            <span className="text-[10px] uppercase tracking-[0.4em] text-brand-accent font-semibold block mb-4">
+              Inspiration Wall
+            </span>
+            <h2 className="font-sans font-normal text-[28px] lg:text-[48px] leading-[1.2] text-brand-textPrimary tracking-tight">
               Design Gallery
             </h2>
           </div>
 
-          {/* Premium Pill Tabs */}
-          <div className="flex flex-wrap gap-2.5 pb-2 justify-start md:justify-end">
+          {/* Clean tabs styled to match portfolio filters */}
+          <div className="flex overflow-x-auto no-scrollbar scroll-smooth flex-nowrap md:flex-wrap gap-2 md:gap-4 border-b border-brand-border pb-2 -mx-6 px-6 md:mx-0 md:px-0 w-[calc(100%+3rem)] md:w-auto">
             {categories.map((cat) => {
               const isActive = selectedCategory === cat;
               return (
                 <button
                   key={cat}
                   onClick={() => handleCategoryChange(cat)}
-                  className={`px-5 py-2 text-[10px] font-sans uppercase tracking-[0.2em] font-semibold rounded-full transition-all duration-300 focus:outline-none cursor-pointer ${
+                  className={`text-[10px] font-sans uppercase tracking-[0.2em] px-3 py-1.5 transition-all duration-300 focus:outline-none cursor-pointer font-semibold whitespace-nowrap shrink-0 ${
                     isActive 
-                      ? 'bg-brand-secBg text-brand-textPrimary shadow-sm border border-brand-accent/20' 
-                      : 'bg-transparent text-brand-textSecondary hover:bg-brand-secBg/40 hover:text-brand-textPrimary border border-transparent'
+                      ? 'text-brand-accent border-b-2 border-brand-accent font-semibold' 
+                      : 'text-brand-textSecondary hover:text-brand-accent'
                   }`}
                 >
                   {cat}
@@ -131,11 +131,11 @@ export default function Gallery() {
           </div>
         </div>
 
-        {/* Gallery Container - Managed via Opacity Fade State Machine */}
+        {/* Gallery Container with Grid Layout */}
         <div className="relative min-h-[350px]">
           <AnimatePresence mode="wait">
             {isLoading ? (
-              /* Shimmer Skeletons (Prevents layout shifting) */
+              /* Shimmer Skeletons */
               <motion.div
                 key="shimmer-skeletons"
                 initial={{ opacity: 0 }}
@@ -147,12 +147,12 @@ export default function Gallery() {
                 {Array.from({ length: 4 }).map((_, idx) => (
                   <div 
                     key={idx}
-                    className="bg-brand-secBg/50 animate-pulse aspect-[4/3] max-h-[320px] rounded-2xl border border-brand-border/40"
+                    className="bg-brand-secBg/50 animate-pulse aspect-[4/3] rounded-[12px] border border-brand-border/40"
                   />
                 ))}
               </motion.div>
             ) : (
-              /* High-Contrast Grid Images (Fades in without jumps) */
+              /* Grid Images (with 12px rounded corners and subtle hover zoom) */
               <motion.div
                 key={`grid-${displayedCategory}`}
                 initial={{ opacity: 0 }}
@@ -164,32 +164,29 @@ export default function Gallery() {
                 {filteredItems.map((item) => (
                   <div
                     key={item.id}
-                    className="relative overflow-hidden group cursor-pointer border border-brand-border bg-brand-card aspect-[4/3] max-h-[320px] w-full rounded-2xl shadow-sm hover:shadow-md hover:scale-[1.01] transition-all duration-300"
+                    className="relative overflow-hidden group cursor-pointer border border-brand-border bg-brand-card aspect-[4/3] w-full rounded-[12px] shadow-sm hover:shadow-md transition-all duration-300"
                     onClick={() => openLightbox(item)}
                   >
-                    {/* Image (Slow hover zoom) */}
                     <img
                       src={item.src}
                       alt={item.alt}
-                      className="w-full h-full object-cover transition-transform duration-[400ms] ease-out group-hover:scale-[1.08]"
+                      className="w-full h-full object-cover transition-transform duration-[700ms] ease-out group-hover:scale-[1.03]"
                       loading="lazy"
                     />
 
-                    {/* Hover subtle dark mask & details reveal */}
-                    <div className="absolute inset-0 bg-black/35 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-4 rounded-2xl">
-                      {/* Top expand tag */}
+                    {/* Hover subtle dark mask & expand icon reveal */}
+                    <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-4 rounded-[12px]">
                       <div className="flex justify-end">
                         <div className="p-1.5 bg-brand-bg/90 rounded-full text-brand-textPrimary shadow-sm">
                           <Maximize2 size={10} />
                         </div>
                       </div>
 
-                      {/* Bottom details */}
                       <div className="text-left translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
                         <span className="font-sans text-[8px] uppercase tracking-widest text-brand-accent font-semibold">
                           {item.category}
                         </span>
-                        <h3 className="font-sans font-semibold text-[15px] text-white mt-0.5">
+                        <h3 className="font-sans font-semibold text-[14px] text-white mt-0.5">
                           {item.title}
                         </h3>
                       </div>
@@ -203,7 +200,7 @@ export default function Gallery() {
 
       </div>
 
-      {/* Fullscreen Lightbox Preview */}
+      {/* Lightbox Component */}
       <Lightbox
         image={activeImage}
         isOpen={isLightboxOpen}
