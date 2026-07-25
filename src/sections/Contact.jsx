@@ -38,7 +38,10 @@ export default function Contact() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const url = getWhatsAppUrl(formData);
-    window.open(url, '_blank', 'noopener,noreferrer');
+    
+    // Redirect directly to bypass browser pop-up blockers
+    window.location.href = url;
+    
     setIsSubmitted(true);
   };
 
@@ -92,9 +95,16 @@ export default function Contact() {
                 <div className="flex gap-3 items-start">
                   <Phone size={16} className="text-brand-accent shrink-0 mt-0.5" />
                   <div>
-                    <p className="font-semibold text-brand-textPrimary">Consultation Desk</p>
-                    <p className="mt-0.5">+91 98100 88200</p>
-                    <p>+91 124 456 7890</p>
+                    <p className="font-semibold text-brand-textPrimary">Consultation Desk & WhatsApp</p>
+                    <p className="mt-0.5 text-brand-textPrimary">+91 83028 93552</p>
+                    <a 
+                      href="https://api.whatsapp.com/send?phone=918302893552"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-brand-accent hover:text-brand-textPrimary transition-colors mt-1.5 font-semibold text-[11px]"
+                    >
+                      Chat Directly on WhatsApp →
+                    </a>
                   </div>
                 </div>
 
