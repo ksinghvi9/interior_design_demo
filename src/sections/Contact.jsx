@@ -33,20 +33,17 @@ Sent via Aurum Atelier Website`;
   };
 
   const getWhatsAppUrl = (data) => {
-    return `https://wa.me/${TARGET_WHATSAPP}?text=${encodeURIComponent(getFormattedMessage(data))}`;
+    return `https://api.whatsapp.com/send?phone=${TARGET_WHATSAPP}&text=${encodeURIComponent(getFormattedMessage(data))}`;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const url = getWhatsAppUrl(formData);
-    
-    // Try opening in new tab
-    const win = window.open(url, '_blank');
-    if (!win || win.closed || typeof win.closed === 'undefined') {
-      // Fallback to location redirect if popup blocker prevented new tab
-      window.location.href = url;
+    if (!formData.name || !formData.phone) {
+      alert('Please enter your Name and Phone Number.');
+      return;
     }
-    
+    const url = getWhatsAppUrl(formData);
+    window.open(url, '_blank', 'noopener,noreferrer');
     setIsSubmitted(true);
   };
 
@@ -302,13 +299,23 @@ Sent via Aurum Atelier Website`;
                     />
                   </div>
 
-                  {/* Submit Button */}
-                  <button 
-                    type="submit"
-                    className="w-full py-3.5 bg-brand-accent text-white hover:bg-brand-textPrimary transition-all duration-300 font-sans text-[11px] uppercase tracking-widest flex items-center justify-center gap-3 border border-transparent rounded-lg cursor-pointer font-semibold"
+                  {/* Native WhatsApp Submit Link */}
+                  <a 
+                    href={getWhatsAppUrl(formData)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => {
+                      if (!formData.name || !formData.phone) {
+                        e.preventDefault();
+                        alert('Please enter your Full Name and Phone Number before sending.');
+                        return;
+                      }
+                      setIsSubmitted(true);
+                    }}
+                    className="w-full py-3.5 bg-brand-accent text-white hover:bg-brand-textPrimary transition-all duration-300 font-sans text-[11px] uppercase tracking-widest flex items-center justify-center gap-3 border border-transparent rounded-lg cursor-pointer font-semibold text-center select-none"
                   >
-                    Send Request <Send size={11} />
-                  </button>
+                    Send Request via WhatsApp <Send size={11} />
+                  </a>
                 </motion.form>
               ) : (
                 <motion.div 
