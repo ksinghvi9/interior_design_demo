@@ -304,7 +304,7 @@ export default function Contact() {
                   </p>
 
                   <a
-                    href={`https://wa.me/8302893552?text=${encodeURIComponent(
+                    href={`https://wa.me/9414834341?text=${encodeURIComponent(
 `✨ *NEW CONSULTATION REQUEST* ✨
 -----------------------------------
 👤 *Full Name:* ${formData.name}
