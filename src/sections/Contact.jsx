@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MapPin, Phone, Mail, Clock, Check, Send } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Check, Send, MessageCircle } from 'lucide-react';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -312,9 +312,10 @@ Sent via Aurum Atelier Website`;
                       }
                       setIsSubmitted(true);
                     }}
-                    className="w-full py-3.5 bg-brand-accent text-white hover:bg-brand-textPrimary transition-all duration-300 font-sans text-[11px] uppercase tracking-widest flex items-center justify-center gap-3 border border-transparent rounded-lg cursor-pointer font-semibold text-center select-none"
+                    className="w-full py-3.5 bg-[#25D366] hover:bg-[#1EBE5D] text-white transition-all duration-300 font-sans text-[11px] uppercase tracking-widest flex items-center justify-center gap-2.5 rounded-lg cursor-pointer font-bold shadow-md hover:shadow-lg text-center select-none"
                   >
-                    Send Request via WhatsApp <Send size={11} />
+                    <MessageCircle size={16} />
+                    Send Request via WhatsApp
                   </a>
                 </motion.form>
               ) : (
