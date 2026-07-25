@@ -17,27 +17,28 @@ export default function Contact() {
   const propertyTypes = ['Villa', 'Apartment', 'Penthouse', 'Office', 'Other'];
   const budgetRanges = ['₹30 - ₹50 Lakhs', '₹50 - ₹80 Lakhs', '₹80 Lakhs - ₹1.5 Crore', '₹1.5 Crore+'];
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const TARGET_WHATSAPP = '918302893552'; // Full international format (Country code 91 + 10-digit number)
 
-    const targetWhatsAppNumber = '918302893552';
-
+  const getWhatsAppUrl = (data) => {
     const formattedMessage = 
 `✨ *NEW CONSULTATION REQUEST* ✨
 -----------------------------------
-👤 *Full Name:* ${formData.name}
-📧 *Email Address:* ${formData.email}
-📞 *Phone Number:* ${formData.phone}
-🏠 *Property Type:* ${formData.propertyType}
-💰 *Estimated Budget:* ${formData.budget}
-📝 *Project Brief:* ${formData.details}
+👤 *Full Name:* ${data.name}
+📧 *Email Address:* ${data.email}
+📞 *Phone Number:* ${data.phone}
+🏠 *Property Type:* ${data.propertyType}
+💰 *Estimated Budget:* ${data.budget}
+📝 *Project Brief:* ${data.details}
 -----------------------------------
 *Sent via Aurum Atelier Website*`;
 
-    const encodedMessage = encodeURIComponent(formattedMessage);
-    const whatsappUrl = `https://wa.me/${targetWhatsAppNumber}?text=${encodedMessage}`;
+    return `https://api.whatsapp.com/send?phone=${TARGET_WHATSAPP}&text=${encodeURIComponent(formattedMessage)}`;
+  };
 
-    window.open(whatsappUrl, '_blank');
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const url = getWhatsAppUrl(formData);
+    window.open(url, '_blank', 'noopener,noreferrer');
     setIsSubmitted(true);
   };
 
@@ -304,18 +305,7 @@ export default function Contact() {
                   </p>
 
                   <a
-                    href={`https://wa.me/9414834341?text=${encodeURIComponent(
-`✨ *NEW CONSULTATION REQUEST* ✨
------------------------------------
-👤 *Full Name:* ${formData.name}
-📧 *Email Address:* ${formData.email}
-📞 *Phone Number:* ${formData.phone}
-🏠 *Property Type:* ${formData.propertyType}
-💰 *Estimated Budget:* ${formData.budget}
-📝 *Project Brief:* ${formData.details}
------------------------------------
-*Sent via Aurum Atelier Website*`
-                    )}`}
+                    href={getWhatsAppUrl(formData)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-5 px-6 py-3 bg-brand-accent hover:bg-brand-textPrimary text-white font-sans text-[10px] uppercase tracking-widest rounded-lg inline-flex items-center gap-2 font-semibold transition-colors"
