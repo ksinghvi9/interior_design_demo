@@ -17,32 +17,46 @@ export default function Contact() {
   const propertyTypes = ['Villa', 'Apartment', 'Penthouse', 'Office', 'Other'];
   const budgetRanges = ['₹30 - ₹50 Lakhs', '₹50 - ₹80 Lakhs', '₹80 Lakhs - ₹1.5 Crore', '₹1.5 Crore+'];
 
-  const TARGET_WHATSAPP = '918302893552'; // Full international format (Country code 91 + 10-digit number)
+  const TARGET_WHATSAPP = '918302893552';
+
+  const getFormattedMessage = (data) => {
+    return `NEW CONSULTATION REQUEST:
+-----------------------------------
+Full Name: ${data.name || ''}
+Email Address: ${data.email || ''}
+Phone Number: ${data.phone || ''}
+Property Type: ${data.propertyType || ''}
+Estimated Budget: ${data.budget || ''}
+Project Brief: ${data.details || ''}
+-----------------------------------
+Sent via Aurum Atelier Website`;
+  };
 
   const getWhatsAppUrl = (data) => {
-    const formattedMessage = 
-`✨ *NEW CONSULTATION REQUEST* ✨
------------------------------------
-👤 *Full Name:* ${data.name}
-📧 *Email Address:* ${data.email}
-📞 *Phone Number:* ${data.phone}
-🏠 *Property Type:* ${data.propertyType}
-💰 *Estimated Budget:* ${data.budget}
-📝 *Project Brief:* ${data.details}
------------------------------------
-*Sent via Aurum Atelier Website*`;
-
-    return `https://api.whatsapp.com/send?phone=${TARGET_WHATSAPP}&text=${encodeURIComponent(formattedMessage)}`;
+    return `https://wa.me/${TARGET_WHATSAPP}?text=${encodeURIComponent(getFormattedMessage(data))}`;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const url = getWhatsAppUrl(formData);
     
-    // Redirect directly to bypass browser pop-up blockers
-    window.location.href = url;
+    // Try opening in new tab
+    const win = window.open(url, '_blank');
+    if (!win || win.closed || typeof win.closed === 'undefined') {
+      // Fallback to location redirect if popup blocker prevented new tab
+      window.location.href = url;
+    }
     
     setIsSubmitted(true);
+  };
+
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    const msg = getFormattedMessage(formData);
+    navigator.clipboard.writeText(msg);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   const handleReset = () => {
@@ -323,12 +337,21 @@ export default function Contact() {
                     Open WhatsApp Chat <Send size={11} />
                   </a>
 
-                  <button
-                    onClick={handleReset}
-                    className="mt-4 px-5 py-2 border border-brand-border hover:border-brand-accent text-[9px] uppercase tracking-widest text-brand-textSecondary hover:text-brand-accent transition-colors focus:outline-none cursor-pointer rounded-lg"
-                  >
-                    Submit Another Request
-                  </button>
+                  <div className="flex gap-3 mt-3">
+                    <button
+                      onClick={handleCopy}
+                      className="px-4 py-2 bg-brand-secBg border border-brand-border text-brand-textPrimary text-[10px] uppercase tracking-widest rounded-lg font-semibold hover:border-brand-accent transition-colors"
+                    >
+                      {copied ? '✓ Form Message Copied!' : '📋 Copy Form Message'}
+                    </button>
+
+                    <button
+                      onClick={handleReset}
+                      className="px-4 py-2 border border-brand-border text-brand-textSecondary text-[10px] uppercase tracking-widest rounded-lg hover:text-brand-accent transition-colors"
+                    >
+                      Submit Another
+                    </button>
+                  </div>
                 </motion.div>
               )}
             </AnimatePresence>
