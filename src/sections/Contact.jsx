@@ -19,9 +19,26 @@ export default function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setTimeout(() => {
-      setIsSubmitted(true);
-    }, 800);
+
+    const targetWhatsAppNumber = '918302893552';
+
+    const formattedMessage = 
+`✨ *NEW CONSULTATION REQUEST* ✨
+-----------------------------------
+👤 *Full Name:* ${formData.name}
+📧 *Email Address:* ${formData.email}
+📞 *Phone Number:* ${formData.phone}
+🏠 *Property Type:* ${formData.propertyType}
+💰 *Estimated Budget:* ${formData.budget}
+📝 *Project Brief:* ${formData.details}
+-----------------------------------
+*Sent via Aurum Atelier Website*`;
+
+    const encodedMessage = encodeURIComponent(formattedMessage);
+    const whatsappUrl = `https://wa.me/${targetWhatsAppNumber}?text=${encodedMessage}`;
+
+    window.open(whatsappUrl, '_blank');
+    setIsSubmitted(true);
   };
 
   const handleReset = () => {
@@ -280,15 +297,35 @@ export default function Contact() {
                     <Check size={20} />
                   </div>
                   <h3 className="font-sans font-semibold text-xl text-brand-textPrimary tracking-normal">
-                    Request Received
+                    Opening WhatsApp...
                   </h3>
                   <p className="mt-2 text-xs font-sans text-brand-textSecondary max-w-sm leading-relaxed font-light mx-auto">
-                    Thank you, <span className="font-semibold text-brand-accent">{formData.name}</span>. Our concierge desk will review your details and contact you via phone or email within 24 hours to schedule a studio meeting.
+                    Thank you, <span className="font-semibold text-brand-accent">{formData.name}</span>. Your consultation details have been formatted and directed to WhatsApp (<span className="font-semibold text-brand-textPrimary">+91 83028 93552</span>).
                   </p>
-                  
+
+                  <a
+                    href={`https://wa.me/8302893552?text=${encodeURIComponent(
+`✨ *NEW CONSULTATION REQUEST* ✨
+-----------------------------------
+👤 *Full Name:* ${formData.name}
+📧 *Email Address:* ${formData.email}
+📞 *Phone Number:* ${formData.phone}
+🏠 *Property Type:* ${formData.propertyType}
+💰 *Estimated Budget:* ${formData.budget}
+📝 *Project Brief:* ${formData.details}
+-----------------------------------
+*Sent via Aurum Atelier Website*`
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-5 px-6 py-3 bg-brand-accent hover:bg-brand-textPrimary text-white font-sans text-[10px] uppercase tracking-widest rounded-lg inline-flex items-center gap-2 font-semibold transition-colors"
+                  >
+                    Open WhatsApp Chat <Send size={11} />
+                  </a>
+
                   <button
                     onClick={handleReset}
-                    className="mt-6 px-5 py-2 border border-brand-border hover:border-brand-accent text-[9px] uppercase tracking-widest text-brand-textSecondary hover:text-brand-accent transition-colors focus:outline-none cursor-pointer rounded-lg"
+                    className="mt-4 px-5 py-2 border border-brand-border hover:border-brand-accent text-[9px] uppercase tracking-widest text-brand-textSecondary hover:text-brand-accent transition-colors focus:outline-none cursor-pointer rounded-lg"
                   >
                     Submit Another Request
                   </button>
